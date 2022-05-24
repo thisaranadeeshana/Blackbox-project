@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:theme="@style/Theme.AppCompat.DayNight"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tool"
+    tools:context=".ReadData">
+    <LinearLayout
+        android:id="@+id/layo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/basic"
+            android:layout_width="300dp"
+            android:layout_height="15mm"
+            android:layout_margin="5mm"
+            android:background="@drawable/bhu"
+            android:text="Get Data"
+            android:textSize="6mm"
+            android:textColor="@color/white"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        android:layout_below="@id/layo"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/readdataBtn"
+        tools:ignore="UnknownId" />
+    <LinearLayout
+        android:id="@+id/layo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layo"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/readdataBtn">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Temperature :"
+                android:textColor="@color/white"
+                android:layout_marginStart="20dp"
+                android:textSize="5mm"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Temperaturev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/white"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp" />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/readdataBtn">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RPM  :"
+                android:textColor="@color/white"
+                android:layout_marginStart="20dp"
+                android:textSize="5mm"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Spindle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/white"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp" />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/readdataBtn">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Torque  :"
+                android:textColor="@color/white"
+                android:layout_marginStart="20dp"
+                android:textSize="5mm"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Vibrationv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/white"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp" />
+
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
