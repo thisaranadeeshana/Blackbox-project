@@ -1,0 +1,127 @@
+#include "FirebaseESP8266.h"
+#include <ESP8266WiFi.h>
+
+#include <SPI.h> //for SPI communication
+#include <mcp2515.h> // for can communication
+struct can_frame canMsg;
+MCP2515 mcp2515(10); //SPI CS pin 10 
+
+#define FIREBASE_HOST "sltdatabase-7198a-default-rtdb.firebaseio.com" //Without http:// or https:// schemeshttps://sltdatabase-7198a-default-rtdb.firebaseio.com/
+#define FIREBASE_AUTH "HRTZ7UnCHrDtLvAMQixcCcPIq4LI6j7cTbv04YnC" 
+//#define WIFI_SSID "SLT-4G-C74A"
+//#define WIFI_PASSWORD "222864Y077N"
+#define WIFI_SSID "Digital Lab"
+#define WIFI_PASSWORD "digi$#lab123"
+
+//SSID - Digital Lab
+//Password - digi$#lab123
+
+FirebaseData firebaseData;
+String path = "/SLTFactoryA/machineA/";
+unsigned long count = 0;
+
+String x = "0";
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(300);
+  }
+  Serial.println();
+  Serial.print("Connected with IP: ");
+  Serial.println(WiFi.localIP());
+  Serial.println();
+
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  Firebase.reconnectWiFi(true);
+  firebaseData.setBSSLBufferSize(1024, 1024);
+  firebaseData.setResponseSize(1024);
+
+  if (!Firebase.beginStream(firebaseData, path)) {
+    Serial.println("Can't begin stream connection...");
+  }
+
+  mcp2515.reset();
+  mcp2515.setBitrate(CAN_125KBPS); //set CAN speed
+  mcp2515.setNormalMode(); // CAN state in normel mode
+
+}
+
+void loop() {
+  
+//    Serial.print(canMsg.can_id, HEX); // print ID
+//    Serial.print(" "); 
+//    Serial.print(canMsg.can_dlc, HEX); // print DLC
+//    Serial.print(" ");
+
+    canMsg.can_id  = 0x0F6; // just for test
+    canMsg.can_dlc = 4; // just for test
+    canMsg.data[0] = 0;
+    canMsg.data[1] = 0;
+    canMsg.data[2] = 5;
+    canMsg.data[3] = 8;
+
+
+    
+  for (int i = 0; i<canMsg.can_dlc; i++)  
+    { 
+      x = x + canMsg.data[i];
+    
+    
+    if (Firebase.setString(firebaseData, path + "/Heat", x)) 
+    if (Firebase.setString(firebaseData, path + "/RPM", x)) 
+    if (Firebase.setString(firebaseData, path + "/Torque", x)) 
+    {
+      Serial.print("data sent into firebase , data : ");
+      Serial.println(x);
+    } else {
+      Serial.println("data sending faild... ");
+      }
+   x = "R";  
+    }
+//    for (int i = 0; i<canMsg.can_dlc; i++)  
+//    {  // print the data
+//      //Serial.print(canMsg.data[i]);
+//      x = x + canMsg.data[i];
+//    }
+//  
+//    if (Firebase.setString(firebaseData, path + "/Heat", x)) 
+//    {
+//      Serial.print("data sent into firebase , data : ");
+//      Serial.println(x);
+//    } else {
+//      Serial.println("data sending faild... ");
+//   }
+//   x = "R"; 
+
+} 
+
+
+
+//  if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK) 
+//  {
+//    Serial.print(canMsg.can_id, HEX); // print ID
+//    Serial.print(" "); 
+//    Serial.print(canMsg.can_dlc, HEX); // print DLC
+//    Serial.print(" ");
+//
+//    for (int i = 0; i<canMsg.can_dlc; i++)  
+//    {  // print the data
+//      Serial.print(canMsg.data[i],HEX);
+//      x = x + canMsg.data[i];
+//    }
+//  
+//    if (Firebase.setString(firebaseData, path + "/Heat", x)) 
+//    {
+//      Serial.print("data sent into firebase , data : ");
+//      Serial.println(x);
+//    } else {
+//      Serial.println("data sending faild... ");
+//    }
+//  
+//   Serial.println(x);   
+//   x = "R";  
+//  }
